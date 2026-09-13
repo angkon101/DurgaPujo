@@ -1476,12 +1476,107 @@ function initNavigation() {
 }
 
 // ==========================================================================
+// 11. High-End Durga Vector Animation Controller (Hero Showcase)
+// ==========================================================================
+
+function initDurgaVectorAnimation() {
+  const container = document.getElementById('durgaVectorContainer');
+  const svg = document.getElementById('durgaSvg');
+  const leftPupil = document.getElementById('leftPupilGroup');
+  const rightPupil = document.getElementById('rightPupilGroup');
+  const btnReplay = document.getElementById('btnReplayDraw');
+  const btnBlessing = document.getElementById('btnBlessingBurst');
+
+  if (!container || !svg) return;
+
+  // 1. Eye Tracking (Pupil gently follows mouse/cursor)
+  window.addEventListener('mousemove', e => {
+    const rect = svg.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+
+    // SVG coordinate space mapping (500x500 viewBox)
+    const mouseSvgX = ((e.clientX - rect.left) / rect.width) * 500;
+    const mouseSvgY = ((e.clientY - rect.top) / rect.height) * 500;
+
+    // Left eye center in SVG: (216, 246)
+    const leftDx = mouseSvgX - 216;
+    const leftDy = mouseSvgY - 246;
+    const leftDist = Math.hypot(leftDx, leftDy) || 1;
+    const maxRadius = 4.0;
+    const leftMoveX = (leftDx / leftDist) * Math.min(leftDist * 0.05, maxRadius);
+    const leftMoveY = (leftDy / leftDist) * Math.min(leftDist * 0.05, maxRadius);
+
+    if (leftPupil) {
+      leftPupil.setAttribute('transform', `translate(${216 + leftMoveX}, ${246 + leftMoveY})`);
+    }
+
+    // Right eye center in SVG: (284, 246)
+    const rightDx = mouseSvgX - 284;
+    const rightDy = mouseSvgY - 246;
+    const rightDist = Math.hypot(rightDx, rightDy) || 1;
+    const rightMoveX = (rightDx / rightDist) * Math.min(rightDist * 0.05, maxRadius);
+    const rightMoveY = (rightDy / rightDist) * Math.min(rightDist * 0.05, maxRadius);
+
+    if (rightPupil) {
+      rightPupil.setAttribute('transform', `translate(${284 + rightMoveX}, ${246 + rightMoveY})`);
+    }
+  });
+
+  // 2. Interactive Click / Touch Shockwave & Temple Bell
+  container.addEventListener('click', e => {
+    const rect = container.getBoundingClientRect();
+    const shock = document.createElement('div');
+    shock.className = 'vector-shockwave';
+    shock.style.left = `${e.clientX - rect.left}px`;
+    shock.style.top = `${e.clientY - rect.top}px`;
+    container.appendChild(shock);
+
+    synth.playGhanta(1780, 2.0);
+
+    setTimeout(() => shock.remove(), 750);
+  });
+
+  // 3. Replay Path Animation
+  btnReplay?.addEventListener('click', e => {
+    e.stopPropagation();
+    const paths = svg.querySelectorAll('.animated-path');
+    paths.forEach(p => {
+      p.style.animation = 'none';
+      p.offsetHeight; // Trigger reflow
+      p.style.animation = '';
+    });
+    synth.playGhanta(1540, 1.8);
+  });
+
+  // 4. Divine Blessing Shockwave & Conch Sound
+  btnBlessing?.addEventListener('click', e => {
+    e.stopPropagation();
+    synth.playShankha();
+    synth.playGhanta(1600, 2.5);
+
+    // Shockwave from center
+    const shock = document.createElement('div');
+    shock.className = 'vector-shockwave';
+    shock.style.left = '50%';
+    shock.style.top = '50%';
+    container.appendChild(shock);
+
+    container.style.transform = 'scale(1.08)';
+    setTimeout(() => {
+      container.style.transform = '';
+      shock.remove();
+    }, 800);
+  });
+}
+
+// ==========================================================================
 // Initialize on DOM Ready
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
   initParticleCanvas();
   initCountdown();
+  initDurgaVectorAnimation();
   initDarshanInteractions();
   initScheduleTabs();
   initPandalsGrid();

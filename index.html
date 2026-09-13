@@ -62,60 +62,234 @@
   <!-- Main Hero Section -->
   <section class="hero-section" id="hero">
     <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="festive-badge">
-        <span class="badge-sparkle">✨</span> UNESCO Intangible Cultural Heritage of Humanity <span class="badge-sparkle">✨</span>
-      </div>
-      <h1 class="hero-title">
-        <span class="bengali-script">মা আসছেন ধরণীতলে</span>
-        <span class="english-title">Celebrating The Divine Homecoming</span>
-      </h1>
-      <p class="hero-subtitle">
-        Immerse yourself in the majestic beats of the Dhak, the sacred resonance of the Shankha, radiant Pandals, and divine blessings of Maa Durga.
-      </p>
+    <div class="hero-container">
+      <!-- Left Column: Content & Countdown -->
+      <div class="hero-content">
+        <div class="festive-badge">
+          <span class="badge-sparkle">✨</span> UNESCO Intangible Cultural Heritage of Humanity <span class="badge-sparkle">✨</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="bengali-script">মা আসছেন ধরণীতলে</span>
+          <span class="english-title">Celebrating The Divine Homecoming</span>
+        </h1>
+        <p class="hero-subtitle">
+          Immerse yourself in the majestic beats of the Dhak, the sacred resonance of the Shankha, radiant Pandals, and divine blessings of Maa Durga.
+        </p>
 
-      <!-- Live Festival Countdown Clock -->
-      <div class="countdown-container" id="countdownWrapper">
-        <div class="countdown-heading">
-          <span class="clock-icon">⏳</span> Countdown to <strong id="countdownEventName">Maha Shashthi Bodhon</strong>
+        <!-- Live Festival Countdown Clock -->
+        <div class="countdown-container" id="countdownWrapper">
+          <div class="countdown-heading">
+            <span class="clock-icon">⏳</span> Countdown to <strong id="countdownEventName">Maha Shashthi Bodhon</strong>
+          </div>
+          <div class="countdown-grid">
+            <div class="countdown-card">
+              <span class="count-num" id="days">00</span>
+              <span class="count-label">Days</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-card">
+              <span class="count-num" id="hours">00</span>
+              <span class="count-label">Hours</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-card">
+              <span class="count-num" id="minutes">00</span>
+              <span class="count-label">Minutes</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-card">
+              <span class="count-num" id="seconds">00</span>
+              <span class="count-label">Seconds</span>
+            </div>
+          </div>
+          <div class="tithi-pill" id="currentTithiDisplay">
+            <span class="bullet-dot"></span> Sharodiya Ashwin Shukla Paksha
+          </div>
         </div>
-        <div class="countdown-grid">
-          <div class="countdown-card">
-            <span class="count-num" id="days">00</span>
-            <span class="count-label">Days</span>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-card">
-            <span class="count-num" id="hours">00</span>
-            <span class="count-label">Hours</span>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-card">
-            <span class="count-num" id="minutes">00</span>
-            <span class="count-label">Minutes</span>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-card">
-            <span class="count-num" id="seconds">00</span>
-            <span class="count-label">Seconds</span>
-          </div>
-        </div>
-        <div class="tithi-pill" id="currentTithiDisplay">
-          <span class="bullet-dot"></span> Sharodiya Ashwin Shukla Paksha
+
+        <!-- Quick Action CTA Buttons -->
+        <div class="hero-buttons">
+          <a href="#darshan" class="btn btn-primary">
+            <span class="btn-icon">🙏</span> Enter Virtual Darshan
+          </a>
+          <a href="#pandals" class="btn btn-outline">
+            <span class="btn-icon">🏮</span> Explore Pandals
+          </a>
+          <a href="#dhak" class="btn btn-gold">
+            <span class="btn-icon">🥁</span> Play Live Dhak
+          </a>
         </div>
       </div>
 
-      <!-- Quick Action CTA Buttons -->
-      <div class="hero-buttons">
-        <a href="#darshan" class="btn btn-primary">
-          <span class="btn-icon">🙏</span> Enter Virtual Darshan
-        </a>
-        <a href="#pandals" class="btn btn-outline">
-          <span class="btn-icon">🏮</span> Explore Pandals
-        </a>
-        <a href="#dhak" class="btn btn-gold">
-          <span class="btn-icon">🥁</span> Play Live Dhak
-        </a>
+      <!-- Right Column: Interactive High-End Durga Vector Animation -->
+      <div class="hero-vector-col">
+        <div class="vector-art-wrapper glass-panel" id="durgaVectorContainer" title="Click to receive Divine Blessing">
+          <div class="vector-glow-bg"></div>
+          
+          <svg class="durga-svg-art" id="durgaSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Metallic Gold Gradients -->
+              <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff2a8" />
+                <stop offset="40%" stop-color="#d4af37" />
+                <stop offset="75%" stop-color="#f5c542" />
+                <stop offset="100%" stop-color="#aa7c11" />
+              </linearGradient>
+
+              <linearGradient id="crimsonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ff3b56" />
+                <stop offset="60%" stop-color="#b8142c" />
+                <stop offset="100%" stop-color="#600410" />
+              </linearGradient>
+
+              <radialGradient id="trinayanGlowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="35%" stop-color="#ffeb3b" />
+                <stop offset="70%" stop-color="#ff4500" />
+                <stop offset="100%" stop-color="transparent" />
+              </radialGradient>
+
+              <filter id="svgGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Background Rotating Sacred Chakra / Mandala -->
+            <g class="vector-chakra-group" id="vectorChakra">
+              <circle cx="250" cy="250" r="210" fill="none" stroke="url(#goldGradient)" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.45" />
+              <circle cx="250" cy="250" r="185" fill="none" stroke="url(#goldGradient)" stroke-width="2" opacity="0.3" />
+              <!-- Mandala Sun Rays -->
+              <g class="mandala-rays" opacity="0.35">
+                <line x1="250" y1="40" x2="250" y2="70" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="250" y1="430" x2="250" y2="460" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="40" y1="250" x2="70" y2="250" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="430" y1="250" x2="460" y2="250" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="102" y1="102" x2="125" y2="125" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="398" y1="398" x2="375" y2="375" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="102" y1="398" x2="125" y2="375" stroke="url(#goldGradient)" stroke-width="3" />
+                <line x1="398" y1="102" x2="375" y2="125" stroke="url(#goldGradient)" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Divine Royal Mukut (Crown) Layers -->
+            <g class="vector-mukut-group" filter="url(#svgGlow)">
+              <!-- Mukut Base Arches -->
+              <path class="animated-path gold-stroke" d="M 160 170 Q 250 135 340 170 Q 250 190 160 170 Z" fill="rgba(212, 175, 55, 0.15)" stroke="url(#goldGradient)" stroke-width="3" />
+              <!-- Mukut Central Spire -->
+              <path class="animated-path gold-stroke" d="M 250 45 Q 268 115 295 155 Q 250 145 205 155 Q 232 115 250 45 Z" fill="rgba(212, 175, 55, 0.25)" stroke="url(#goldGradient)" stroke-width="3.5" />
+              <!-- Mukut Side Filigree Wings -->
+              <path class="animated-path gold-stroke" d="M 205 155 Q 165 95 140 125 Q 165 150 175 168" fill="none" stroke="url(#goldGradient)" stroke-width="2.5" />
+              <path class="animated-path gold-stroke" d="M 295 155 Q 335 95 360 125 Q 335 150 325 168" fill="none" stroke="url(#goldGradient)" stroke-width="2.5" />
+              <!-- Crown Jewels / Ornaments -->
+              <circle cx="250" cy="55" r="7" fill="#ff3b56" stroke="#fff" stroke-width="1.5" />
+              <circle cx="250" cy="95" r="5" fill="#fbe28a" />
+              <circle cx="250" cy="130" r="6" fill="#ff3b56" />
+              <circle cx="140" cy="125" r="5" fill="#fbe28a" />
+              <circle cx="360" cy="125" r="5" fill="#fbe28a" />
+            </g>
+
+            <!-- Divine Face Contour & Cascading Locks -->
+            <g class="vector-face-group">
+              <!-- Cascading Hair Strands -->
+              <path class="animated-path dark-hair" d="M 155 175 Q 130 260 135 360 Q 150 330 165 290" fill="none" stroke="#22132d" stroke-width="5" />
+              <path class="animated-path dark-hair" d="M 345 175 Q 370 260 365 360 Q 350 330 335 290" fill="none" stroke="#22132d" stroke-width="5" />
+              
+              <!-- Sacred Facial Outline -->
+              <path class="animated-path face-contour" d="M 175 190 Q 180 300 250 365 Q 320 300 325 190" fill="rgba(255, 240, 220, 0.04)" stroke="url(#goldGradient)" stroke-width="2.8" />
+            </g>
+
+            <!-- Sacred Third Eye (Trinayan) with Pulsing Glow -->
+            <g class="vector-trinayan-group">
+              <!-- Third Eye Outer Contour -->
+              <path class="animated-path trinayan-contour" d="M 250 178 Q 264 198 250 220 Q 236 198 250 178 Z" fill="rgba(184, 20, 44, 0.3)" stroke="url(#goldGradient)" stroke-width="2.5" />
+              <!-- Third Eye Core Flame -->
+              <circle class="trinayan-flame-core" cx="250" cy="199" r="6" fill="url(#trinayanGlowGrad)" />
+            </g>
+
+            <!-- Chandan Dots (সন্দেশ চন্দন ফোঁটা) Above Brows -->
+            <g class="chandan-dots" fill="#faf8f5" opacity="0.85">
+              <circle cx="218" cy="216" r="2.2" />
+              <circle cx="228" cy="212" r="2.2" />
+              <circle cx="238" cy="210" r="2.2" />
+              <circle cx="262" cy="210" r="2.2" />
+              <circle cx="272" cy="212" r="2.2" />
+              <circle cx="282" cy="216" r="2.2" />
+            </g>
+
+            <!-- Expressive Eyebrows -->
+            <g class="vector-brows">
+              <path class="animated-path brow-path" d="M 195 230 Q 225 218 242 225" fill="none" stroke="#2a1435" stroke-width="4.5" stroke-linecap="round" />
+              <path class="animated-path brow-path" d="M 305 230 Q 275 218 258 225" fill="none" stroke="#2a1435" stroke-width="4.5" stroke-linecap="round" />
+            </g>
+
+            <!-- Iconic Divine Almond Eyes with Interactive Pupils -->
+            <g class="vector-eyes">
+              <!-- Left Eye Outer Contour -->
+              <path class="animated-path eye-wing" d="M 188 245 Q 215 228 244 246 Q 215 264 188 245 Z" fill="#ffffff" stroke="#1a0b22" stroke-width="3" />
+              <!-- Left Eye Wing Kohl (Kajol) -->
+              <path class="animated-path kohl-wing" d="M 188 245 Q 170 240 162 232" fill="none" stroke="#1a0b22" stroke-width="3" stroke-linecap="round" />
+              <!-- Left Pupil Tracking Group -->
+              <g id="leftPupilGroup" transform="translate(216, 246)">
+                <circle class="pupil-iris" cx="0" cy="0" r="7.5" fill="#4a2c11" />
+                <circle class="pupil-center" cx="0" cy="0" r="5" fill="#000000" />
+                <circle class="pupil-sparkle" cx="-2" cy="-2" r="2" fill="#ffffff" />
+              </g>
+
+              <!-- Right Eye Outer Contour -->
+              <path class="animated-path eye-wing" d="M 312 245 Q 285 228 256 246 Q 285 264 312 245 Z" fill="#ffffff" stroke="#1a0b22" stroke-width="3" />
+              <!-- Right Eye Wing Kohl (Kajol) -->
+              <path class="animated-path kohl-wing" d="M 312 245 Q 330 240 338 232" fill="none" stroke="#1a0b22" stroke-width="3" stroke-linecap="round" />
+              <!-- Right Pupil Tracking Group -->
+              <g id="rightPupilGroup" transform="translate(284, 246)">
+                <circle class="pupil-iris" cx="0" cy="0" r="7.5" fill="#4a2c11" />
+                <circle class="pupil-center" cx="0" cy="0" r="5" fill="#000000" />
+                <circle class="pupil-sparkle" cx="-2" cy="-2" r="2" fill="#ffffff" />
+              </g>
+            </g>
+
+            <!-- Graceful Nose & Royal Golden Nath (Nose Ring) -->
+            <g class="vector-nose-group">
+              <path class="animated-path nose-bridge" d="M 250 242 Q 252 278 244 286 Q 250 289 256 286" fill="none" stroke="url(#goldGradient)" stroke-width="2.2" />
+              <!-- Circular Golden Nath -->
+              <circle class="animated-path gold-nath" cx="230" cy="286" r="21" fill="none" stroke="url(#goldGradient)" stroke-width="3" filter="url(#svgGlow)" />
+              <circle cx="209" cy="286" r="3.5" fill="#ff3b56" />
+              <!-- Nath Chain to Hair -->
+              <path class="animated-path nath-chain" d="M 209 286 Q 170 270 148 245" fill="none" stroke="url(#goldGradient)" stroke-width="1.6" stroke-dasharray="3,3" />
+            </g>
+
+            <!-- Compassionate Smiling Lips -->
+            <g class="vector-lips">
+              <path class="animated-path lip-top" d="M 228 316 Q 250 324 272 316 Q 250 330 228 316 Z" fill="url(#crimsonGradient)" stroke="#fff" stroke-width="1" />
+              <path class="animated-path lip-bottom" d="M 234 322 Q 250 336 266 322" fill="none" stroke="url(#crimsonGradient)" stroke-width="2.5" />
+            </g>
+
+            <!-- Divine Trishul (Trident) on the Right Side -->
+            <g class="vector-trishul" filter="url(#svgGlow)">
+              <!-- Trishul Shaft -->
+              <line class="animated-path trishul-shaft" x1="400" y1="440" x2="400" y2="120" stroke="url(#goldGradient)" stroke-width="4.5" />
+              <!-- Center Blade -->
+              <path class="animated-path trishul-blade" d="M 394 120 Q 400 40 406 120 Z" fill="url(#goldGradient)" stroke="#fff" stroke-width="1.5" />
+              <!-- Left & Right Curved Prongs -->
+              <path class="animated-path trishul-prong" d="M 400 130 Q 370 135 372 90 Q 385 105 400 115" fill="url(#goldGradient)" stroke="#fff" stroke-width="1.5" />
+              <path class="animated-path trishul-prong" d="M 400 130 Q 430 135 428 90 Q 415 105 400 115" fill="url(#goldGradient)" stroke="#fff" stroke-width="1.5" />
+              <circle cx="400" cy="130" r="6" fill="#ff3b56" />
+            </g>
+          </svg>
+
+          <!-- Interactive Vector Toolbar -->
+          <div class="vector-toolbar">
+            <button class="vector-btn" id="btnReplayDraw" title="Replay Path Animation">
+              <span>✍️</span> Replay Sketch
+            </button>
+            <button class="vector-btn" id="btnBlessingBurst" title="Receive Divine Aura Shockwave">
+              <span>🔱</span> Divine Blessing
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
