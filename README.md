@@ -83,21 +83,29 @@ Built with modern **HTML5**, **Vanilla CSS3**, and **Vanilla ES6 JavaScript** wi
 
 ## 🚀 Getting Started Locally
 
-### Quick Launch
-1. Clone the repository:
+### Quick Launch with Vite (Recommended)
+1. Clone the repository and install dependencies:
    ```bash
    git clone https://github.com/angkon101/DurgaPujo.git
    cd DurgaPujo
+   npm install
    ```
-2. Open `index.html` directly in any modern web browser, or serve it using any local HTTP server:
+2. Start the development server with instant hot-module reload:
    ```bash
-   # Using Python 3
-   python -m http.server 8000
-
-   # Or using Node npx
-   npx serve .
+   npm run dev
    ```
-3. Navigate to `http://localhost:8000` in your browser.
+3. Open `http://localhost:5173` in your browser.
+
+### Alternative Launch Options
+- **Production Build**:
+  ```bash
+  npm run build
+  npm run preview
+  ```
+- **Direct Server (No Node setup)**:
+  ```bash
+  python -m http.server 8000
+  ```
 
 ---
 
