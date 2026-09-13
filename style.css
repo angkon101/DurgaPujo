@@ -596,6 +596,67 @@ body {
   background: radial-gradient(ellipse at 50% 20%, rgba(71, 4, 13, 0.4) 0%, rgba(9, 6, 14, 0.95) 75%);
 }
 
+/* Cinematic Protima Animation Modes Bar */
+.protima-animation-modes-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  margin-bottom: 24px;
+  background: rgba(19, 12, 30, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-pill);
+  flex-wrap: wrap;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(212, 175, 55, 0.2);
+}
+
+.modes-label {
+  font-family: var(--font-bengali);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  letter-spacing: 0.5px;
+}
+
+.modes-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mode-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  font-family: var(--font-bengali);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mode-pill-btn:hover {
+  background: rgba(212, 175, 55, 0.18);
+  color: var(--gold-bright);
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+}
+
+.mode-pill-btn.active {
+  background: linear-gradient(135deg, var(--crimson-primary) 0%, var(--gold-primary) 100%);
+  color: #ffffff;
+  border-color: #fff;
+  box-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
+  transform: translateY(-2px);
+}
+
 .mandap-stage-wrapper {
   display: grid;
   grid-template-columns: 1.8fr 1.2fr;
@@ -603,15 +664,66 @@ body {
   align-items: center;
 }
 
+/* 3D Perspective Stage Container */
+.mandap-stage-3d-container {
+  perspective: 1400px;
+  width: 100%;
+}
+
 .mandap-stage {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.2);
-  border: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 50px rgba(212, 175, 55, 0.25);
+  border: 2px solid rgba(212, 175, 55, 0.45);
   aspect-ratio: 16 / 9;
   background: #000;
   cursor: crosshair;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.mandap-stage.camera-shake {
+  animation: stageShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes stageShake {
+  10%, 90% { transform: translate3d(-2px, -1px, 0); }
+  20%, 80% { transform: translate3d(3px, 2px, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, -2px, 0); }
+  40%, 60% { transform: translate3d(4px, 2px, 0); }
+}
+
+/* Stage Canvases */
+.stage-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.halo-canvas {
+  z-index: 1;
+}
+
+.weapon-canvas {
+  z-index: 4;
+}
+
+.smoke-canvas {
+  z-index: 5;
+}
+
+/* 3D Pratima Layer */
+.pratima-3d-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .mandap-image {
@@ -619,7 +731,175 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: filter var(--transition-normal);
+  transition: filter 0.4s ease;
+}
+
+/* Third Eye (Trinayan) Focal Point */
+.trinayan-point {
+  position: absolute;
+  top: 24.5%;
+  left: 50.4%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trinayan-point.active-eye {
+  opacity: 1;
+}
+
+.trinayan-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #ffe600 40%, #ff6600 80%, transparent 100%);
+  filter: drop-shadow(0 0 10px #ffcc00) drop-shadow(0 0 20px #ff6600);
+  animation: eyeFlamePulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes eyeFlamePulse {
+  0% { transform: scale(0.8); filter: drop-shadow(0 0 8px #ffcc00); }
+  100% { transform: scale(1.4); filter: drop-shadow(0 0 25px #ff9900) drop-shadow(0 0 40px #ff3300); }
+}
+
+.trinayan-beam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 100, 0.7) 0%, rgba(255, 120, 0, 0.3) 35%, transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.trinayan-point.awakened .trinayan-beam {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.8);
+  animation: beamRays 2s ease-in-out infinite alternate;
+}
+
+@keyframes beamRays {
+  0% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 1; filter: drop-shadow(0 0 40px #ffd700); }
+}
+
+/* Trishul Lightning / Spark Point */
+.trishul-glow-point {
+  position: absolute;
+  top: 18%;
+  left: 37.5%;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 6;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 215, 0, 0.5) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.trishul-glow-point.active-trishul {
+  opacity: 1;
+  animation: trishulSparkBurst 0.6s infinite alternate;
+}
+
+@keyframes trishulSparkBurst {
+  0% { transform: scale(0.8); filter: drop-shadow(0 0 10px #ffe600); }
+  100% { transform: scale(1.6); filter: drop-shadow(0 0 30px #ff3300) drop-shadow(0 0 50px #ffbb00); }
+}
+
+/* 108 Sandhi Diya Altar Arc */
+.sandhi-diya-arc {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  height: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+  z-index: 7;
+  padding: 0 10px;
+}
+
+.micro-sandhi-diya {
+  width: 9px;
+  height: 14px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.micro-sandhi-diya.lit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.micro-flame {
+  width: 5px;
+  height: 8px;
+  background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffeb3b 40%, #ff5722 90%);
+  border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+  filter: drop-shadow(0 0 4px #ff9800);
+  animation: flameBurn 0.6s infinite alternate;
+}
+
+.micro-bowl {
+  width: 8px;
+  height: 4px;
+  background: #a0522d;
+  border-radius: 0 0 8px 8px;
+  border: 1px solid #ffb74d;
+}
+
+/* Sanctum Awakening Flash Overlay */
+.sanctum-awakening-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #ffe680 40%, #ff7700 80%);
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.sanctum-awakening-flash.flashing {
+  opacity: 0.95;
+}
+
+/* Cosmic Power Sanctum State */
+.mandap-stage.cosmic-mode {
+  border-color: #ff3b30;
+  box-shadow: 0 0 80px rgba(255, 69, 0, 0.6), 0 0 120px rgba(255, 215, 0, 0.4);
+}
+
+.mandap-stage.cosmic-mode .mandap-image {
+  filter: contrast(1.15) saturate(1.2) brightness(1.08);
+}
+
+.mandap-stage.awakening-dim .mandap-image {
+  filter: brightness(0.2) contrast(1.3);
+}
+
+.mandap-stage.awakening-dim .aura-glow {
+  opacity: 0.1;
 }
 
 .aura-glow {
@@ -635,6 +915,7 @@ body {
   opacity: 0.6;
   animation: auraBreathe 4s ease-in-out infinite alternate;
   filter: blur(12px);
+  z-index: 1;
 }
 
 @keyframes auraBreathe {

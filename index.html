@@ -136,38 +136,84 @@
         </p>
       </div>
 
+      <!-- Cinematic Protima Animation Mode Switcher -->
+      <div class="protima-animation-modes-bar glass-panel">
+        <span class="modes-label">✨ প্রতিমা সজীব রূপ (Cinematic Modes):</span>
+        <div class="modes-buttons">
+          <button class="mode-pill-btn active" id="btnModeNormal" data-mode="normal">
+            <span>🪷</span> শান্ত রূপ (Sanctum)
+          </button>
+          <button class="mode-pill-btn" id="btnModeCosmic" data-mode="cosmic">
+            <span>⚡</span> রণচণ্ডী শক্তি (Cosmic Power)
+          </button>
+          <button class="mode-pill-btn" id="btnModeAwakening" data-mode="awakening">
+            <span>👁️</span> বোধন ও চক্ষুদান (Awakening)
+          </button>
+          <button class="mode-pill-btn" id="btnModeSandhi" data-mode="sandhi">
+            <span>🪔</span> ১০৮ প্রদীপ (108 Sandhi Diyas)
+          </button>
+        </div>
+      </div>
+
       <div class="mandap-stage-wrapper">
-        <!-- Mandap Stage Container -->
-        <div class="mandap-stage" id="mandapStage">
-          <img src="assets/durga_pratima.jpg" alt="Maa Durga Pratima in Daker Saaj" class="mandap-image" id="pratimaImg" loading="lazy">
-          
-          <!-- Atmospheric Elements -->
-          <div class="stage-fog"></div>
-          <div class="aura-glow" id="auraGlow"></div>
-          
-          <!-- Interactive Aarti Thali -->
-          <div class="aarti-thali" id="aartiThali">
-            <div class="thali-plate">
-              <div class="diya-flame-center flame-active" id="thaliFlame"></div>
-              <div class="incense-smoke"></div>
-            </div>
-            <div class="thali-label">✨ Move Cursor or Drag to Perform Aarti</div>
-          </div>
+        <!-- Mandap Stage 3D Container -->
+        <div class="mandap-stage-3d-container">
+          <div class="mandap-stage" id="mandapStage">
+            <!-- Background Golden Radiant Mandala Canvas -->
+            <canvas id="haloCanvas" class="stage-canvas halo-canvas"></canvas>
 
-          <!-- Virtual Diyas on the Altar -->
-          <div class="altar-diyas">
-            <div class="altar-diya left" id="leftDiya">
-              <div class="diya-bowl"></div>
-              <div class="diya-flame" id="flameLeft"></div>
-            </div>
-            <div class="altar-diya right" id="rightDiya">
-              <div class="diya-bowl"></div>
-              <div class="diya-flame" id="flameRight"></div>
-            </div>
-          </div>
+            <!-- 3D Pratima Layer with Tilting & Lighting -->
+            <div class="pratima-3d-layer" id="pratima3DLayer">
+              <img src="assets/durga_pratima.jpg" alt="Maa Durga Pratima in Daker Saaj" class="mandap-image" id="pratimaImg" loading="lazy">
+              
+              <!-- Third Eye (Trinayan) Focal Awakening Element -->
+              <div class="trinayan-point" id="trinayanGlow" title="Third Eye / ত্রিনয়ন">
+                <div class="trinayan-core"></div>
+                <div class="trinayan-beam"></div>
+              </div>
 
-          <!-- Offering Flower Burst Layer -->
-          <div class="flower-burst-layer" id="flowerBurstLayer"></div>
+              <!-- Trishul Golden Lightning / Energy Point -->
+              <div class="trishul-glow-point" id="trishulPoint"></div>
+
+              <!-- Electric Weapon Spark & Arc Canvas -->
+              <canvas id="weaponSparkCanvas" class="stage-canvas weapon-canvas"></canvas>
+            </div>
+
+            <!-- Atmospheric Volumetric Dhuno Smoke Simulation Canvas -->
+            <canvas id="smokeCanvas" class="stage-canvas smoke-canvas"></canvas>
+
+            <!-- Atmospheric Lighting & Fog Overlays -->
+            <div class="stage-fog"></div>
+            <div class="aura-glow" id="auraGlow"></div>
+            <div class="sanctum-awakening-flash" id="awakeningFlash"></div>
+
+            <!-- 108 Sandhi Diya Altar Arc Container -->
+            <div class="sandhi-diya-arc" id="sandhiDiyaArc"></div>
+            
+            <!-- Interactive Aarti Thali -->
+            <div class="aarti-thali" id="aartiThali">
+              <div class="thali-plate">
+                <div class="diya-flame-center flame-active" id="thaliFlame"></div>
+                <div class="incense-smoke"></div>
+              </div>
+              <div class="thali-label">✨ Move Cursor or Drag to Perform Aarti</div>
+            </div>
+
+            <!-- Virtual Diyas on the Altar -->
+            <div class="altar-diyas">
+              <div class="altar-diya left" id="leftDiya">
+                <div class="diya-bowl"></div>
+                <div class="diya-flame" id="flameLeft"></div>
+              </div>
+              <div class="altar-diya right" id="rightDiya">
+                <div class="diya-bowl"></div>
+                <div class="diya-flame" id="flameRight"></div>
+              </div>
+            </div>
+
+            <!-- Offering Flower Burst Layer -->
+            <div class="flower-burst-layer" id="flowerBurstLayer"></div>
+          </div>
         </div>
 
         <!-- Ritual Controls Sidebar -->

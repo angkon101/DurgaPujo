@@ -357,94 +357,532 @@ function initCountdown() {
 }
 
 // ==========================================================================
-// 4. Interactive Virtual Darshan & Aarti Actions
+// 4. High-End Dynamic Durga Pratima Animation Engine
 // ==========================================================================
 
-function initDarshanInteractions() {
-  const mandap = document.getElementById('mandapStage');
-  const thali = document.getElementById('aartiThali');
-  const burstLayer = document.getElementById('flowerBurstLayer');
-  let isOrbiting = false;
+class DurgaProtimaAnimationEngine {
+  constructor() {
+    this.stage = document.getElementById('mandapStage');
+    this.pratimaLayer = document.getElementById('pratima3DLayer');
+    this.haloCanvas = document.getElementById('haloCanvas');
+    this.sparkCanvas = document.getElementById('weaponSparkCanvas');
+    this.smokeCanvas = document.getElementById('smokeCanvas');
+    this.trinayan = document.getElementById('trinayanGlow');
+    this.trishulPoint = document.getElementById('trishulPoint');
+    this.flashOverlay = document.getElementById('awakeningFlash');
+    this.sandhiArc = document.getElementById('sandhiDiyaArc');
+    this.thali = document.getElementById('aartiThali');
+    this.burstLayer = document.getElementById('flowerBurstLayer');
 
-  // Move thali with mouse over the mandap
-  if (mandap && thali) {
-    mandap.addEventListener('mousemove', e => {
-      if (isOrbiting) return;
-      const rect = mandap.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      thali.style.left = `${x}px`;
-      thali.style.top = `${y}px`;
+    this.currentMode = 'normal'; // 'normal' | 'cosmic' | 'awakening' | 'sandhi'
+    
+    // Parallax tracking
+    this.targetTiltX = 0;
+    this.targetTiltY = 0;
+    this.currentTiltX = 0;
+    this.currentTiltY = 0;
+
+    // Halo properties
+    this.haloAngle = 0;
+    this.haloSpeed = 0.006;
+    this.haloPulse = 0;
+
+    // Particles & Emitters
+    this.sparks = [];
+    this.smokePuffs = [];
+    this.isAartiOrbiting = false;
+    this.sandhiDiyas = [];
+  }
+
+  init() {
+    if (!this.stage) return;
+
+    this.resizeCanvases();
+    window.addEventListener('resize', () => this.resizeCanvases());
+
+    this.initParallax();
+    this.init108SandhiDiyas();
+    this.initAartiThali();
+    this.initRitualButtons();
+    this.initModeSwitcher();
+
+    // Start animation loop
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
+  }
+
+  resizeCanvases() {
+    const rect = this.stage.getBoundingClientRect();
+    const w = rect.width || 800;
+    const h = rect.height || 450;
+
+    [this.haloCanvas, this.sparkCanvas, this.smokeCanvas].forEach(c => {
+      if (c) {
+        c.width = w;
+        c.height = h;
+      }
     });
   }
 
-  // Ritual Buttons
-  document.getElementById('btnShankha')?.addEventListener('click', () => {
-    synth.playShankha();
-    triggerDivineHalo();
-  });
+  initParallax() {
+    this.stage.addEventListener('mousemove', e => {
+      const rect = this.stage.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      this.targetTiltX = (x - 0.5) * 2; // -1 to 1
+      this.targetTiltY = (y - 0.5) * 2; // -1 to 1
 
-  document.getElementById('btnGhanta')?.addEventListener('click', () => {
-    synth.playGhanta(1420, 2.2);
-    triggerDivineHalo();
-  });
+      // Also move Aarti Thali if not orbiting
+      if (!this.isAartiOrbiting && this.thali) {
+        this.thali.style.left = `${e.clientX - rect.left}px`;
+        this.thali.style.top = `${e.clientY - rect.top}px`;
+      }
+    });
 
-  document.getElementById('btnPushpanjali')?.addEventListener('click', () => {
-    triggerFlowerShower();
-    synth.playGhanta(1750, 1.8);
-  });
+    this.stage.addEventListener('mouseleave', () => {
+      this.targetTiltX = 0;
+      this.targetTiltY = 0;
+    });
 
-  document.getElementById('btnAartiMode')?.addEventListener('click', () => {
-    isOrbiting = !isOrbiting;
-    thali.classList.toggle('orbiting', isOrbiting);
-    if (isOrbiting) {
-      synth.playDhakBol('crescendo');
+    // Touch support for mobile devices
+    this.stage.addEventListener('touchmove', e => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = this.stage.getBoundingClientRect();
+        const x = (touch.clientX - rect.left) / rect.width;
+        const y = (touch.clientY - rect.top) / rect.height;
+        this.targetTiltX = (x - 0.5) * 2;
+        this.targetTiltY = (y - 0.5) * 2;
+      }
+    }, { passive: true });
+  }
+
+  init108SandhiDiyas() {
+    if (!this.sandhiArc) return;
+    this.sandhiArc.innerHTML = '';
+    this.sandhiDiyas = [];
+
+    for (let i = 0; i < 108; i++) {
+      const diya = document.createElement('div');
+      diya.className = 'micro-sandhi-diya';
+      diya.title = `Sandhi Diya #${i + 1}`;
+      diya.innerHTML = `
+        <div class="micro-flame"></div>
+        <div class="micro-bowl"></div>
+      `;
+      this.sandhiArc.appendChild(diya);
+      this.sandhiDiyas.push(diya);
     }
-  });
+  }
 
-  document.getElementById('btnPranom')?.addEventListener('click', () => {
-    triggerDivineHalo();
-    synth.playShankha();
-    alert('মা দুর্গার আশীর্বাদ আপনার এবং আপনার পরিবারের উপর সদা বর্ষিত হোক। শুভ শারদীয়া!');
-  });
+  initAartiThali() {
+    // Aarti mode toggle
+    document.getElementById('btnAartiMode')?.addEventListener('click', () => {
+      this.isAartiOrbiting = !this.isAartiOrbiting;
+      this.thali?.classList.toggle('orbiting', this.isAartiOrbiting);
+      if (this.isAartiOrbiting) {
+        synth.playDhakBol('crescendo');
+      }
+    });
+  }
 
-  // Mantra Chanting Recitation
-  document.getElementById('chantToggleBtn')?.addEventListener('click', () => {
-    synth.playGhanta(1300, 3.0);
-    const text = 'ওঁ জয়ন্তী মঙ্গলা কালী ভদ্রকালী কপালিনী। দুর্গা শিবা ক্ষমা ধাত্রী স্বাহা স্বধা নমোঽস্তু তে॥';
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.85;
-      utterance.pitch = 1.0;
-      window.speechSynthesis.speak(utterance);
+  initRitualButtons() {
+    document.getElementById('btnShankha')?.addEventListener('click', () => {
+      synth.playShankha();
+      this.triggerDivineGlowBurst();
+    });
+
+    document.getElementById('btnGhanta')?.addEventListener('click', () => {
+      synth.playGhanta(1420, 2.2);
+      this.triggerDivineGlowBurst();
+    });
+
+    document.getElementById('btnPushpanjali')?.addEventListener('click', () => {
+      this.triggerFlowerShower();
+      synth.playGhanta(1750, 1.8);
+    });
+
+    document.getElementById('btnPranom')?.addEventListener('click', () => {
+      this.triggerDivineGlowBurst();
+      synth.playShankha();
+      alert('মা দুর্গার আশীর্বাদ আপনার এবং আপনার পরিবারের উপর সদা বর্ষিত হোক। শুভ শারদীয়া!');
+    });
+
+    document.getElementById('chantToggleBtn')?.addEventListener('click', () => {
+      synth.playGhanta(1300, 3.0);
+      const text = 'ওঁ জয়ন্তী মঙ্গলা কালী ভদ্রকালী কপালিনী। দুর্গা শিবা ক্ষমা ধাত্রী স্বাহা স্বধা নমোঽস্তু তে॥';
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.85;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    });
+  }
+
+  initModeSwitcher() {
+    const buttons = document.querySelectorAll('.mode-pill-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.switchMode(btn.dataset.mode);
+      });
+    });
+  }
+
+  switchMode(mode) {
+    this.currentMode = mode;
+    this.stage.classList.remove('cosmic-mode', 'awakening-dim');
+    this.trinayan?.classList.remove('active-eye', 'awakened');
+    this.trishulPoint?.classList.remove('active-trishul');
+
+    switch (mode) {
+      case 'normal':
+        this.haloSpeed = 0.006;
+        break;
+
+      case 'cosmic':
+        this.triggerCosmicPowerMode();
+        break;
+
+      case 'awakening':
+        this.triggerAwakeningMode();
+        break;
+
+      case 'sandhi':
+        this.trigger108SandhiMode();
+        break;
     }
-  });
+  }
 
-  function triggerDivineHalo() {
+  // Cinematic Mode 1: Cosmic Power Strike (রণচণ্ডী রূপ)
+  triggerCosmicPowerMode() {
+    this.stage.classList.add('cosmic-mode');
+    this.stage.classList.add('camera-shake');
+    this.trishulPoint?.classList.add('active-trishul');
+    this.haloSpeed = 0.024;
+
+    synth.playDhakBol('crescendo');
+    setTimeout(() => {
+      synth.playShankha();
+      this.stage.classList.remove('camera-shake');
+    }, 450);
+
+    // Erupt explosive electric sparks around Trishul
+    const w = this.sparkCanvas.width;
+    const h = this.sparkCanvas.height;
+    for (let i = 0; i < 40; i++) {
+      this.sparks.push({
+        x: w * 0.375,
+        y: h * 0.180,
+        vx: (Math.random() - 0.5) * 14,
+        vy: (Math.random() - 0.5) * 14,
+        radius: Math.random() * 3.5 + 1.5,
+        alpha: 1,
+        color: Math.random() > 0.4 ? '#ffe600' : '#ff3300'
+      });
+    }
+  }
+
+  // Cinematic Mode 2: Bodhon & Chokkhu Daan (Divine Awakening)
+  triggerAwakeningMode() {
+    this.stage.classList.add('awakening-dim');
+    this.haloSpeed = 0.003;
+    synth.playGhanta(1100, 3.5);
+
+    setTimeout(() => {
+      // Third eye begins to pulse
+      this.trinayan?.classList.add('active-eye');
+      synth.playGhanta(1650, 2.0);
+    }, 800);
+
+    setTimeout(() => {
+      // Beam awakens and flash burst
+      this.trinayan?.classList.add('awakened');
+      this.flashOverlay?.classList.add('flashing');
+      synth.playShankha();
+
+      setTimeout(() => {
+        this.flashOverlay?.classList.remove('flashing');
+        this.stage.classList.remove('awakening-dim');
+        this.triggerFlowerShower();
+      }, 450);
+    }, 2100);
+  }
+
+  // Cinematic Mode 3: 108 Sandhi Diya Illumination (সন্ধিপূজা)
+  trigger108SandhiMode() {
+    synth.playShankha();
+    this.isAartiOrbiting = true;
+    this.thali?.classList.add('orbiting');
+
+    // Light up 108 Diyas in rapid cascade
+    this.sandhiDiyas.forEach((diya, index) => {
+      setTimeout(() => {
+        diya.classList.add('lit');
+        if (index % 12 === 0) {
+          synth.playGhanta(1500 + (index * 6), 0.8);
+        }
+      }, index * 22);
+    });
+
+    setTimeout(() => {
+      this.triggerDivineGlowBurst();
+      synth.playDhakBol('dhak-dha');
+    }, 108 * 22 + 200);
+  }
+
+  triggerDivineGlowBurst() {
     const aura = document.getElementById('auraGlow');
     if (!aura) return;
     aura.style.opacity = '1';
-    aura.style.transform = 'translateX(-50%) scale(1.5)';
+    aura.style.transform = 'translateX(-50%) scale(1.6)';
     setTimeout(() => {
       aura.style.opacity = '0.6';
       aura.style.transform = 'translateX(-50%) scale(1)';
-    }, 1400);
+    }, 1200);
   }
 
-  function triggerFlowerShower() {
+  triggerFlowerShower() {
     const petals = ['🌸', '🌺', '🪷', '🌼', '✨'];
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 28; i++) {
       const petal = document.createElement('div');
       petal.className = 'falling-petal';
       petal.textContent = petals[Math.floor(Math.random() * petals.length)];
       petal.style.left = `${Math.random() * 90 + 5}%`;
       petal.style.top = `${Math.random() * 20}%`;
-      petal.style.animationDelay = `${Math.random() * 0.8}s`;
-      burstLayer.appendChild(petal);
+      petal.style.animationDelay = `${Math.random() * 0.7}s`;
+      this.burstLayer.appendChild(petal);
 
       setTimeout(() => petal.remove(), 2600);
     }
   }
+
+  // Core 60 FPS Animation Loop
+  animate() {
+    // 1. Smooth Parallax Interpolation (LERP)
+    this.currentTiltX += (this.targetTiltX - this.currentTiltX) * 0.08;
+    this.currentTiltY += (this.targetTiltY - this.currentTiltY) * 0.08;
+
+    if (this.pratimaLayer) {
+      const rotY = this.currentTiltX * 7.5;
+      const rotX = -this.currentTiltY * 6.5;
+      this.pratimaLayer.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+
+    // 2. Render Golden Radiant Halo Mandala
+    this.renderHalo();
+
+    // 3. Render Trishul & Weapon Sparks
+    this.renderWeaponSparks();
+
+    // 4. Render Volumetric Dhuno Smoke
+    this.renderSmoke();
+
+    requestAnimationFrame(this.animate);
+  }
+
+  renderHalo() {
+    if (!this.haloCanvas) return;
+    const ctx = this.haloCanvas.getContext('2d');
+    const w = this.haloCanvas.width;
+    const h = this.haloCanvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const cx = w * 0.504 - (this.currentTiltX * 12);
+    const cy = h * 0.245 - (this.currentTiltY * 8);
+    const baseRadius = Math.min(w, h) * 0.26;
+
+    this.haloAngle += this.haloSpeed;
+    this.haloPulse += 0.03;
+    const pulseScale = 1 + Math.sin(this.haloPulse) * 0.05;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(this.haloAngle);
+
+    const isCosmic = this.currentMode === 'cosmic';
+
+    // Outer Solar Rays (24 Spikes)
+    const rays = 24;
+    for (let i = 0; i < rays; i++) {
+      const angle = (Math.PI * 2 / rays) * i;
+      const rayLength = (baseRadius * (isCosmic ? 1.5 : 1.25)) * pulseScale;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(angle - 0.06) * (baseRadius * 0.85), Math.sin(angle - 0.06) * (baseRadius * 0.85));
+      ctx.lineTo(Math.cos(angle) * rayLength, Math.sin(angle) * rayLength);
+      ctx.lineTo(Math.cos(angle + 0.06) * (baseRadius * 0.85), Math.sin(angle + 0.06) * (baseRadius * 0.85));
+      ctx.closePath();
+
+      const grad = ctx.createRadialGradient(0, 0, baseRadius * 0.5, 0, 0, rayLength);
+      if (isCosmic) {
+        grad.addColorStop(0, 'rgba(255, 230, 0, 0.9)');
+        grad.addColorStop(0.5, 'rgba(255, 60, 0, 0.6)');
+        grad.addColorStop(1, 'transparent');
+      } else {
+        grad.addColorStop(0, 'rgba(255, 235, 120, 0.7)');
+        grad.addColorStop(0.6, 'rgba(212, 175, 55, 0.35)');
+        grad.addColorStop(1, 'transparent');
+      }
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Sacred Concentric Circles & Lotus Petals
+    ctx.strokeStyle = isCosmic ? '#ffcc00' : 'rgba(255, 220, 100, 0.75)';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, baseRadius * 0.85, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, baseRadius * 0.65, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // 16 Petals Arc Motif
+    const petals = 16;
+    for (let j = 0; j < petals; j++) {
+      const pAngle = (Math.PI * 2 / petals) * j;
+      ctx.beginPath();
+      ctx.arc(Math.cos(pAngle) * (baseRadius * 0.75), Math.sin(pAngle) * (baseRadius * 0.75), 14, 0, Math.PI * 2);
+      ctx.fillStyle = isCosmic ? 'rgba(255, 100, 0, 0.3)' : 'rgba(212, 175, 55, 0.2)';
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  renderWeaponSparks() {
+    if (!this.sparkCanvas) return;
+    const ctx = this.sparkCanvas.getContext('2d');
+    const w = this.sparkCanvas.width;
+    const h = this.sparkCanvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const tx = w * 0.375;
+    const ty = h * 0.180;
+
+    const isCosmic = this.currentMode === 'cosmic';
+
+    // Generate random spark particles
+    if (isCosmic || Math.random() < 0.3) {
+      const count = isCosmic ? 4 : 1;
+      for (let k = 0; k < count; k++) {
+        this.sparks.push({
+          x: tx + (Math.random() - 0.5) * 12,
+          y: ty + (Math.random() - 0.5) * 12,
+          vx: (Math.random() - 0.5) * (isCosmic ? 6 : 3),
+          vy: (Math.random() - 0.8) * (isCosmic ? 5 : 2.5),
+          radius: Math.random() * 2.5 + 1,
+          alpha: 1,
+          color: isCosmic ? (Math.random() > 0.5 ? '#ffe600' : '#ff4400') : '#ffeaa7'
+        });
+      }
+    }
+
+    // Draw Trishul Electric Lightning Arcs
+    if (isCosmic || Math.random() < 0.2) {
+      ctx.beginPath();
+      ctx.moveTo(tx, ty + 20);
+      let curX = tx;
+      let curY = ty + 20;
+      const targetX = tx + (Math.random() - 0.5) * 20;
+      const targetY = ty - 25;
+
+      const steps = 4;
+      for (let s = 1; s <= steps; s++) {
+        const nextX = tx + (targetX - tx) * (s / steps) + (Math.random() - 0.5) * 8;
+        const nextY = (ty + 20) + (targetY - (ty + 20)) * (s / steps);
+        ctx.lineTo(nextX, nextY);
+      }
+      ctx.strokeStyle = isCosmic ? '#ffffff' : '#ffd700';
+      ctx.lineWidth = isCosmic ? 2.5 : 1.5;
+      ctx.shadowColor = '#ffe600';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+    }
+
+    // Update and draw existing sparks
+    for (let i = this.sparks.length - 1; i >= 0; i--) {
+      const s = this.sparks[i];
+      s.x += s.vx;
+      s.y += s.vy;
+      s.vy += 0.08; // gravity
+      s.alpha -= 0.025;
+
+      if (s.alpha <= 0) {
+        this.sparks.splice(i, 1);
+        continue;
+      }
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.alpha;
+      ctx.shadowColor = s.color;
+      ctx.shadowBlur = 6;
+      ctx.fill();
+    }
+  }
+
+  renderSmoke() {
+    if (!this.smokeCanvas) return;
+    const ctx = this.smokeCanvas.getContext('2d');
+    const w = this.smokeCanvas.width;
+    const h = this.smokeCanvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Emit subtle fragrant dhuno incense puffs
+    if (Math.random() < 0.2) {
+      this.smokePuffs.push({
+        x: w * 0.5 + (Math.random() - 0.5) * 40,
+        y: h * 0.86,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: -(Math.random() * 0.6 + 0.4),
+        radius: 12,
+        maxRadius: Math.random() * 25 + 35,
+        alpha: 0.16,
+        curl: Math.random() * 0.04 - 0.02
+      });
+    }
+
+    for (let i = this.smokePuffs.length - 1; i >= 0; i--) {
+      const p = this.smokePuffs[i];
+      p.x += p.vx + Math.sin(p.y * 0.03) * 0.5;
+      p.y += p.vy;
+      p.radius += 0.25;
+      p.alpha -= 0.0014;
+
+      if (p.alpha <= 0 || p.radius >= p.maxRadius) {
+        this.smokePuffs.splice(i, 1);
+        continue;
+      }
+
+      const grad = ctx.createRadialGradient(p.x, p.y, p.radius * 0.1, p.x, p.y, p.radius);
+      grad.addColorStop(0, `rgba(255, 245, 230, ${p.alpha})`);
+      grad.addColorStop(0.6, `rgba(240, 220, 190, ${p.alpha * 0.5})`);
+      grad.addColorStop(1, 'transparent');
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+  }
+}
+
+let protimaEngine = null;
+function initDarshanInteractions() {
+  protimaEngine = new DurgaProtimaAnimationEngine();
+  protimaEngine.init();
 }
 
 // ==========================================================================
