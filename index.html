@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Durga Puja 2026 | শারদোৎসব - The Divine Homecoming</title>
+  <meta name="description" content="Experience the grandeur of Durga Puja 2026. Interactive Virtual Darshan, Pushpanjali, Sandhi Puja countdown, live Dhak rhythm player, Kolkata Pandal Hopping Guide, and Shubho Bijoya Card Maker.">
+  <meta name="keywords" content="Durga Puja 2026, Sharodotsav, Kolkata Durga Puja, Virtual Darshan, Pushpanjali Mantra, Sandhi Puja, Dhak Rhythm, Pandal Hopping, Shubho Bijoya">
+  <meta property="og:title" content="Durga Puja 2026 | শারদোৎসব - The Divine Homecoming">
+  <meta property="og:description" content="Interactive Virtual Darshan, Dhak Beats, Pandal Parikrama, and Festival Calendar for Durga Puja 2026.">
+  <meta property="og:image" content="assets/durga_pratima.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Hind+Siliguri:wght@400;600;700&family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪔</text></svg>">
+</head>
+<body class="festive-theme">
+  <!-- Audio & Particle Canvas Background -->
+  <canvas id="particleCanvas"></canvas>
+  <canvas id="flowerCanvas"></canvas>
+
+  <!-- Sticky Festive Navigation Bar -->
+  <header class="festive-header" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo">
+        <span class="logo-symbol">🔱</span>
+        <div class="logo-text">
+          <span class="logo-main">শারদোৎসব</span>
+          <span class="logo-sub">DURGA PUJA 2026</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#darshan" class="nav-link">Virtual Darshan</a>
+        <a href="#schedule" class="nav-link">Puja Schedule</a>
+        <a href="#pandals" class="nav-link">Pandal Hopping</a>
+        <a href="#dhak" class="nav-link">Dhak Beats</a>
+        <a href="#greetings" class="nav-link">Greeting Cards</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="soundToggleBtn" class="action-pill sound-btn" title="Toggle Festive Soundscape">
+          <span class="sound-icon">🔔</span>
+          <span class="sound-label">Atmosphere</span>
+        </button>
+        <button id="quickDiyaBtn" class="action-pill diya-btn" title="Light a Virtual Diya">
+          <span class="diya-flame">🪔</span>
+          <span id="navDiyaCount">10,482</span>
+        </button>
+        <button class="mobile-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="festive-badge">
+        <span class="badge-sparkle">✨</span> UNESCO Intangible Cultural Heritage of Humanity <span class="badge-sparkle">✨</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="bengali-script">মা আসছেন ধরণীতলে</span>
+        <span class="english-title">Celebrating The Divine Homecoming</span>
+      </h1>
+      <p class="hero-subtitle">
+        Immerse yourself in the majestic beats of the Dhak, the sacred resonance of the Shankha, radiant Pandals, and divine blessings of Maa Durga.
+      </p>
+
+      <!-- Live Festival Countdown Clock -->
+      <div class="countdown-container" id="countdownWrapper">
+        <div class="countdown-heading">
+          <span class="clock-icon">⏳</span> Countdown to <strong id="countdownEventName">Maha Shashthi Bodhon</strong>
+        </div>
+        <div class="countdown-grid">
+          <div class="countdown-card">
+            <span class="count-num" id="days">00</span>
+            <span class="count-label">Days</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-card">
+            <span class="count-num" id="hours">00</span>
+            <span class="count-label">Hours</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-card">
+            <span class="count-num" id="minutes">00</span>
+            <span class="count-label">Minutes</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-card">
+            <span class="count-num" id="seconds">00</span>
+            <span class="count-label">Seconds</span>
+          </div>
+        </div>
+        <div class="tithi-pill" id="currentTithiDisplay">
+          <span class="bullet-dot"></span> Sharodiya Ashwin Shukla Paksha
+        </div>
+      </div>
+
+      <!-- Quick Action CTA Buttons -->
+      <div class="hero-buttons">
+        <a href="#darshan" class="btn btn-primary">
+          <span class="btn-icon">🙏</span> Enter Virtual Darshan
+        </a>
+        <a href="#pandals" class="btn btn-outline">
+          <span class="btn-icon">🏮</span> Explore Pandals
+        </a>
+        <a href="#dhak" class="btn btn-gold">
+          <span class="btn-icon">🥁</span> Play Live Dhak
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <span>Scroll for Divine Experience</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- Interactive Virtual Darshan & Aarti Mandap -->
+  <section class="section darshan-section" id="darshan">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">পবিত্র দর্শন ও আরতি</span>
+        <h2 class="section-title">Interactive Virtual Darshan & Aarti</h2>
+        <p class="section-subtitle">
+          Experience the sanctum sanctorum of Maa Durga. Light the sacred ghee diya, blow the divine Shankha, ring temple bells, and offer fragrant pushpanjali flowers.
+        </p>
+      </div>
+
+      <div class="mandap-stage-wrapper">
+        <!-- Mandap Stage Container -->
+        <div class="mandap-stage" id="mandapStage">
+          <img src="assets/durga_pratima.jpg" alt="Maa Durga Pratima in Daker Saaj" class="mandap-image" id="pratimaImg" loading="lazy">
+          
+          <!-- Atmospheric Elements -->
+          <div class="stage-fog"></div>
+          <div class="aura-glow" id="auraGlow"></div>
+          
+          <!-- Interactive Aarti Thali -->
+          <div class="aarti-thali" id="aartiThali">
+            <div class="thali-plate">
+              <div class="diya-flame-center flame-active" id="thaliFlame"></div>
+              <div class="incense-smoke"></div>
+            </div>
+            <div class="thali-label">✨ Move Cursor or Drag to Perform Aarti</div>
+          </div>
+
+          <!-- Virtual Diyas on the Altar -->
+          <div class="altar-diyas">
+            <div class="altar-diya left" id="leftDiya">
+              <div class="diya-bowl"></div>
+              <div class="diya-flame" id="flameLeft"></div>
+            </div>
+            <div class="altar-diya right" id="rightDiya">
+              <div class="diya-bowl"></div>
+              <div class="diya-flame" id="flameRight"></div>
+            </div>
+          </div>
+
+          <!-- Offering Flower Burst Layer -->
+          <div class="flower-burst-layer" id="flowerBurstLayer"></div>
+        </div>
+
+        <!-- Ritual Controls Sidebar -->
+        <div class="ritual-controls-panel">
+          <h3 class="panel-heading">
+            <span>উপচার ও ভক্তি</span> Sacred Offerings
+          </h3>
+
+          <div class="ritual-button-group">
+            <button class="ritual-btn" id="btnShankha">
+              <span class="ritual-icon">🐚</span>
+              <div class="ritual-text">
+                <strong>শঙ্খধ্বনি</strong>
+                <span>Blow Divine Shankha</span>
+              </div>
+            </button>
+
+            <button class="ritual-btn" id="btnGhanta">
+              <span class="ritual-icon">🔔</span>
+              <div class="ritual-text">
+                <strong>ঘণ্টাবাদন</strong>
+                <span>Ring Temple Bell</span>
+              </div>
+            </button>
+
+            <button class="ritual-btn" id="btnPushpanjali">
+              <span class="ritual-icon">🌺</span>
+              <div class="ritual-text">
+                <strong>পুষ্পাঞ্জলি প্রদান</strong>
+                <span>Offer Lotus & Flowers</span>
+              </div>
+            </button>
+
+            <button class="ritual-btn" id="btnAartiMode">
+              <span class="ritual-icon">🪔</span>
+              <div class="ritual-text">
+                <strong>সন্ধ্যা আরতি</strong>
+                <span>Toggle Aarti Light Orbit</span>
+              </div>
+            </button>
+
+            <button class="ritual-btn" id="btnPranom">
+              <span class="ritual-icon">🙏</span>
+              <div class="ritual-text">
+                <strong>প্রণাম ও আশীর্বাদ</strong>
+                <span>Receive Divine Blessing</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Live Blessing / Mantra Box -->
+          <div class="mantra-card" id="mantraCard">
+            <div class="mantra-header">
+              <span class="mantra-title">মহা পুষ্পাঞ্জলি মন্ত্র (Pushpanjali Mantra)</span>
+              <button class="audio-chant-btn" id="chantToggleBtn" title="Chant Mantra">
+                <span>🔊</span> Listen
+              </button>
+            </div>
+            <p class="mantra-sanskrit" id="mantraText">
+              "ওঁ জয়ন্তী মঙ্গলা কালী ভদ্রকালী কপালিনী।<br>
+              দুর্গা শিবা ক্ষমা ধাত্রী স্বাহা স্বধা নমোঽস্তু তে॥"
+            </p>
+            <p class="mantra-translation">
+              <em>"O Mother Durga, embodiment of triumph, goodness, and cosmic energy, we bow to Your auspicious grace and divine protection."</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Festival Calendar & Ritual Timings -->
+  <section class="section schedule-section" id="schedule">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">পূজা নির্ঘণ্ট ও তিথি ২০২৬</span>
+        <h2 class="section-title">Puja Calendar & Ritual Schedule</h2>
+        <p class="section-subtitle">
+          Explore the sacred tithis, muhurats, and timeless rituals from Mahalaya to Sindoor Khela on Bijoya Dashami.
+        </p>
+      </div>
+
+      <!-- Day Navigation Tabs -->
+      <div class="schedule-tabs" id="scheduleTabs" role="tablist">
+        <button class="tab-btn active" data-day="mahalaya" role="tab">মহালয়া (Mahalaya)</button>
+        <button class="tab-btn" data-day="shashthi" role="tab">মহা ষষ্ঠী (Shashthi)</button>
+        <button class="tab-btn" data-day="saptami" role="tab">মহা সপ্তমী (Saptami)</button>
+        <button class="tab-btn highlight-tab" data-day="ashtami" role="tab">মহা অষ্টমী (Ashtami & Sandhi)</button>
+        <button class="tab-btn" data-day="navami" role="tab">মহা নবমী (Navami)</button>
+        <button class="tab-btn" data-day="dashami" role="tab">বিজয়া দশমী (Dashami)</button>
+      </div>
+
+      <!-- Schedule Content Cards (Dynamic based on Tab) -->
+      <div class="schedule-detail-card glass-panel" id="scheduleDetail">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Pandal Parikrama / Hopping Explorer -->
+  <section class="section pandals-section" id="pandals">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">প্যান্ডেল পরিক্রমা</span>
+        <h2 class="section-title">Kolkata Pandal Hopping Guide</h2>
+        <p class="section-subtitle">
+          Discover the most renowned architectural wonders, heritage Rajbari pujas, and creative masterpieces with live crowd estimates.
+        </p>
+      </div>
+
+      <!-- Filter Categories -->
+      <div class="pandal-filters" id="pandalFilters">
+        <button class="filter-pill active" data-filter="all">All Pandals</button>
+        <button class="filter-pill" data-filter="heritage">Bonoedi / Heritage</button>
+        <button class="filter-pill" data-filter="grand">Grand Architecture</button>
+        <button class="filter-pill" data-filter="art">Art & Contemporary</button>
+        <button class="filter-pill" data-filter="eco">Eco-Friendly</button>
+      </div>
+
+      <!-- Pandals Grid -->
+      <div class="pandals-grid" id="pandalsGrid">
+        <!-- Dynamic pandal cards rendered by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Dhak Rhythm Synthesizer -->
+  <section class="section dhak-section" id="dhak">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">ঢাকের তাল ও ছন্দ</span>
+        <h2 class="section-title">Interactive Dhak Rhythm Studio</h2>
+        <p class="section-subtitle">
+          The heartbeat of Durga Puja is the thunderous Dhak. Tap the rhythm pads or trigger authentic bol patterns synthesized in real-time.
+        </p>
+      </div>
+
+      <div class="dhak-studio-grid">
+        <!-- Visual Dhak Drummer Banner -->
+        <div class="dhak-banner glass-panel">
+          <img src="assets/dhunuchi_dance.jpg" alt="Dhunuchi dance and Dhak rhythm" class="dhak-bg-img" loading="lazy">
+          <div class="dhak-banner-overlay">
+            <h3 class="dhak-banner-title">ধুনুচি নাচ ও ঢাকের বোল</h3>
+            <p class="dhak-banner-desc">
+              Feel the ecstasy of dhunuchi naach as the dhak drums sync with the swirling incense embers.
+            </p>
+            <div class="rhythm-visualizer" id="rhythmVisualizer">
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+            <div class="dhak-controls-master">
+              <button class="btn btn-primary" id="btnAutoGroove">
+                <span class="btn-icon">▶</span> Play Auto Dhunuchi Groove
+              </button>
+              <button class="btn btn-outline" id="btnStopGroove">
+                <span class="btn-icon">⏹</span> Stop Rhythm
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drum Pads Interactive Console -->
+        <div class="dhak-pads-console glass-panel">
+          <div class="console-header">
+            <h4 class="console-title">Live Bol Triggers</h4>
+            <span class="console-hint">Press Keys [1] to [6] or Click Pads</span>
+          </div>
+
+          <div class="drum-pads-grid">
+            <button class="drum-pad" data-sound="dhak-dha" data-key="1">
+              <span class="pad-key">1</span>
+              <span class="pad-name">Dha! (ধাঁ)</span>
+              <span class="pad-sub">Deep Bass Stroke</span>
+            </button>
+
+            <button class="drum-pad" data-sound="dhak-ti" data-key="2">
+              <span class="pad-key">2</span>
+              <span class="pad-name">Ti-Ki (তি-কি)</span>
+              <span class="pad-sub">Crisp Rim Slap</span>
+            </button>
+
+            <button class="drum-pad" data-sound="dhak-kure" data-key="3">
+              <span class="pad-key">3</span>
+              <span class="pad-name">Kure-Kure (কুড়ে)</span>
+              <span class="pad-sub">Double Bounce</span>
+            </button>
+
+            <button class="drum-pad" data-sound="ghanta" data-key="4">
+              <span class="pad-key">4</span>
+              <span class="pad-name">Kashor (কাঁসর)</span>
+              <span class="pad-sub">Brass Bell Ring</span>
+            </button>
+
+            <button class="drum-pad" data-sound="shankha" data-key="5">
+              <span class="pad-key">5</span>
+              <span class="pad-name">Shankha (শঙ্খ)</span>
+              <span class="pad-sub">Sacred Conch</span>
+            </button>
+
+            <button class="drum-pad special-pad" data-sound="crescendo" data-key="6">
+              <span class="pad-key">6</span>
+              <span class="pad-name">Aarti Roll (আরতি রোল)</span>
+              <span class="pad-sub">Full Crescendo</span>
+            </button>
+          </div>
+
+          <div class="pad-tip">
+            💡 <em>Tip: Tap rapidly on multiple pads to create your own Sharodiya percussion symphony!</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shubho Bijoya & Festive Greeting Card Generator -->
+  <section class="section greetings-section" id="greetings">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">শুভ বিজয়া ও শারদ শুভেচ্ছা</span>
+        <h2 class="section-title">Festive Greeting Card Maker</h2>
+        <p class="section-subtitle">
+          Craft personalized, elegant greeting cards to wish your friends, family, and loved ones a joyful Sharodotsav and Shubho Bijoya.
+        </p>
+      </div>
+
+      <div class="card-maker-grid">
+        <!-- Form Controls -->
+        <div class="card-form glass-panel">
+          <h3 class="form-title">Customize Your Greeting</h3>
+
+          <div class="form-group">
+            <label for="senderName">Your Name (প্রেরক)</label>
+            <input type="text" id="senderName" placeholder="e.g. Angkon Nath" class="form-input" value="Angkon">
+          </div>
+
+          <div class="form-group">
+            <label for="receiverName">Recipient's Name (প্রাপক)</label>
+            <input type="text" id="receiverName" placeholder="e.g. Family & Friends" class="form-input" value="Dear Friends & Family">
+          </div>
+
+          <div class="form-group">
+            <label for="wishPreset">Select Blessing / Message</label>
+            <select id="wishPreset" class="form-select">
+              <option value="1">শারদীয়ার প্রীতি, শুভেচ্ছা ও আন্তরিক অভিনন্দন। মা দুর্গার কৃপায় আপনার জীবন সুখ ও শান্তিতে ভরে উঠুক।</option>
+              <option value="2">May Maa Durga empower you with happiness, good health, peace, and prosperity this Sharodotsav!</option>
+              <option value="3">শুভ বিজয়ার আন্তরিক প্রীতি, শুভেচ্ছা ও বড়দের প্রণাম। মিষ্টিমুখ ও সম্প্রীতিতে ভরে থাকুক জীবন।</option>
+              <option value="4">Wishing you vibrant celebrations, thunderous dhak beats, and divine blessings of Mahamaya!</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Card Theme</label>
+            <div class="theme-picker">
+              <button class="theme-choice active" data-card-theme="crimson-gold" title="Royal Crimson & Gold">
+                <span class="color-dot crimson"></span> Royal Crimson
+              </button>
+              <button class="theme-choice" data-card-theme="midnight-divine" title="Midnight Celestial Navy">
+                <span class="color-dot midnight"></span> Midnight Star
+              </button>
+              <button class="theme-choice" data-card-theme="temple-amber" title="Temple Amber & Marigold">
+                <span class="color-dot amber"></span> Temple Amber
+              </button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" id="btnDownloadCard">
+              <span class="btn-icon">📥</span> Download Card (PNG)
+            </button>
+            <button class="btn btn-outline" id="btnShareCard">
+              <span class="btn-icon">💬</span> Share on WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Canvas Preview -->
+        <div class="card-preview-wrapper glass-panel">
+          <h4 class="preview-title">Live Card Preview</h4>
+          <div class="canvas-holder">
+            <canvas id="greetingCanvas" width="640" height="400"></canvas>
+          </div>
+          <span class="preview-note">Your high-resolution card renders dynamically on HTML5 Canvas.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Ananda Mela, Bhog Booking & Diya Wall -->
+  <section class="section community-section" id="community">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">আনন্দমেলা ও একাত্মতা</span>
+        <h2 class="section-title">Community Celebration & Bhog Seva</h2>
+        <p class="section-subtitle">
+          Join thousands of devotees globally in lighting the eternal flame of unity and book your festival prasadam pass.
+        </p>
+      </div>
+
+      <div class="community-grid">
+        <!-- Global Diya Lighting Card -->
+        <div class="community-card glass-panel text-center">
+          <div class="big-diya-flame">🪔</div>
+          <h3 class="card-headline">বিশ্বব্যাপী প্রদীপ প্রজ্বলন</h3>
+          <p class="card-desc">
+            Light a virtual lamp of hope, prosperity, and goodwill. Every click adds to the global celebration flame.
+          </p>
+          <div class="big-counter" id="globalDiyaCounter">10,482</div>
+          <span class="counter-label">Diyas Glowing Around The Globe</span>
+          <button class="btn btn-gold mt-4" id="btnLightGlobalDiya">
+            <span class="btn-icon">🔥</span> Light My Diya
+          </button>
+        </div>
+
+        <!-- Bhog & Anjali Pass Registration -->
+        <div class="community-card glass-panel">
+          <div class="card-badge">সেবা ও ভোগ</div>
+          <h3 class="card-headline">Maha Bhog & Pushpanjali Pass</h3>
+          <p class="card-desc">
+            Reserve your digital token for Ashtami Khichuri Bhog, Labra, and Payesh distribution at your nearest community mandap.
+          </p>
+          <form class="bhog-quick-form" id="bhogForm" onsubmit="event.preventDefault(); window.registerBhog();">
+            <input type="text" id="bhogName" class="form-input" placeholder="Your Full Name" required>
+            <input type="email" id="bhogEmail" class="form-input" placeholder="Email Address" required>
+            <select id="bhogDay" class="form-select">
+              <option value="Ashtami">Maha Ashtami Bhog (অষ্টমী ভোগ)</option>
+              <option value="Navami">Maha Navami Special Bhog (নবমী ভোগ)</option>
+            </select>
+            <button type="submit" class="btn btn-primary w-full">
+              <span class="btn-icon">🎟️</span> Generate Digital Pass
+            </button>
+          </form>
+          <div id="bhogResult" class="bhog-result-box hidden"></div>
+        </div>
+
+        <!-- Cultural Heritage Story -->
+        <div class="community-card glass-panel">
+          <div class="card-badge">ঐতিহ্য ও সংস্কৃতি</div>
+          <h3 class="card-headline">The Spirit of Sharodotsav</h3>
+          <p class="card-desc">
+            More than a religious celebration, Durga Puja is Bengal's quintessential carnival of art, literature, music, cuisine, and communal brotherhood. In 2021, Kolkata's Durga Puja was inscribed onto UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity.
+          </p>
+          <ul class="cultural-highlights">
+            <li>🌺 <strong>Daker Saaj:</strong> Silver foil ornamentation brought from Germany via post (Dak).</li>
+            <li>🌿 <strong>Kola Bou:</strong> The worship of Mother Nature in nine botanical forms (Nabapatrika).</li>
+            <li>❤️ <strong>Sindoor Khela:</strong> Married women's celebration of marital bliss and sisterhood on Dashami.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festive Footer -->
+  <footer class="festive-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">🔱 শারদোৎসব ২০২৬</span>
+          <p class="footer-tagline">
+            "যা দেবী সর্বভূতেষু শক্তিরূপেণ সংস্থিতা।<br>
+            নমস্তস্যৈ নমস্তস্যৈ নমস্তস্যৈ নমো নমঃ॥"
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <a href="#hero">Home</a>
+          <a href="#darshan">Virtual Darshan</a>
+          <a href="#schedule">Puja Calendar</a>
+          <a href="#pandals">Pandal Explorer</a>
+          <a href="#dhak">Dhak Studio</a>
+          <a href="#greetings">Greeting Maker</a>
+        </div>
+        <div class="footer-repo">
+          <h4>GitHub Repository</h4>
+          <p>Open Source Sharodotsav Festival Web Platform.</p>
+          <a href="https://github.com/angkon101/DurgaPujo" target="_blank" rel="noopener noreferrer" class="github-pill">
+            <span>⭐</span> angkon101/DurgaPujo
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 DurgaPujo. Designed with reverence, love, and cultural pride. শুভ শারদীয়া!</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
