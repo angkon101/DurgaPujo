@@ -1356,6 +1356,236 @@ body {
 }
 
 /* ==========================================================================
+   Complete Ekchala Pantheon Vector Art Section
+   ========================================================================== */
+.ekchala-section {
+  background: radial-gradient(ellipse at 50% 30%, rgba(85, 12, 30, 0.4) 0%, rgba(10, 6, 16, 0.98) 75%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ekchala-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  margin-bottom: 28px;
+  border-radius: var(--radius-pill);
+  flex-wrap: wrap;
+}
+
+.deity-selector-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.deity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  font-family: var(--font-bengali);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.deity-pill:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--gold-primary);
+  color: var(--gold-bright);
+  transform: translateY(-2px);
+}
+
+.deity-pill.active {
+  background: linear-gradient(135deg, var(--crimson-primary) 0%, var(--gold-primary) 100%);
+  color: #ffffff;
+  border-color: #fff;
+  box-shadow: 0 0 16px rgba(255, 140, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.ekchala-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ekchala-stage-wrapper {
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: radial-gradient(circle at 50% 30%, rgba(133, 12, 30, 0.25) 0%, rgba(10, 6, 16, 0.95) 70%);
+  border: 2px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.15);
+}
+
+.ekchala-glow-field {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(255, 215, 0, 0.2) 0%, rgba(255, 60, 0, 0.08) 50%, transparent 75%);
+  pointer-events: none;
+  filter: blur(25px);
+  animation: auraBreathe 4s ease-in-out infinite alternate;
+}
+
+.svg-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+.svg-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.svg-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+
+.ekchala-svg {
+  width: 100%;
+  min-width: 800px;
+  max-width: 1140px;
+  height: auto;
+  display: block;
+  user-select: none;
+  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.8));
+}
+
+/* Staggered Path Stroke Draw Animation */
+.ek-path {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: ekPathDraw 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ekPathDraw {
+  0% { stroke-dashoffset: 1200; opacity: 0; }
+  10% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+.chalchitra-group .ek-path { animation-delay: 0.1s; }
+.durga-master-group .ek-path { animation-delay: 0.3s; }
+.lakshmi-group .ek-path { animation-delay: 0.6s; }
+.saraswati-group .ek-path { animation-delay: 0.8s; }
+.ganesha-group .ek-path { animation-delay: 1.0s; }
+.kartikeya-group .ek-path { animation-delay: 1.2s; }
+.pedestal-group .ek-path { animation-delay: 0.2s; }
+
+/* Deity Interactive Hotspot Styles */
+.deity-hotspot {
+  cursor: pointer;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+.deity-hotspot:hover {
+  filter: drop-shadow(0 0 16px #ffd700) drop-shadow(0 0 28px rgba(255, 215, 0, 0.6));
+}
+
+.deity-hotspot.spotlight {
+  filter: drop-shadow(0 0 25px #ffd700) drop-shadow(0 0 50px #ff4500) drop-shadow(0 0 80px rgba(255, 215, 0, 0.8)) !important;
+  opacity: 1 !important;
+}
+
+.deity-hotspot.dimmed {
+  opacity: 0.22;
+  filter: grayscale(0.65) brightness(0.45);
+}
+
+/* Deity Info Card */
+.deity-info-card {
+  padding: 24px 32px;
+  background: rgba(10, 6, 16, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.deity-info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.deity-badge {
+  font-family: var(--font-bengali);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.deity-title {
+  font-family: var(--font-bengali);
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.deity-shloka {
+  font-family: var(--font-bengali);
+  font-size: 1rem;
+  color: var(--gold-bright);
+  font-style: italic;
+}
+
+.deity-meaning {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.deity-symbol-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.symbol-tag {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* Aarti Spotlight Mode on Ekchala */
+.ekchala-stage-wrapper.aarti-spotlight {
+  background: radial-gradient(circle at 50% 40%, rgba(255, 140, 0, 0.3) 0%, rgba(10, 6, 16, 0.98) 65%);
+  box-shadow: 0 0 80px rgba(255, 140, 0, 0.4), inset 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
    Puja Calendar & Schedule Section
    ========================================================================== */
 .schedule-tabs {

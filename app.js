@@ -255,6 +255,66 @@ class FestivalAudioSynthesizer {
       }, 140);
     });
   }
+
+  // Synthesize Resonant Veena Pluck Chord (for Devi Saraswati)
+  playVeenaChord() {
+    this.init();
+    const now = this.ctx.currentTime;
+    const notes = [220, 277.18, 329.63, 440]; // A major meditative chord
+    notes.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      osc.type = idx % 2 === 0 ? 'triangle' : 'sawtooth';
+      osc.frequency.setValueAtTime(freq * 0.98, now + idx * 0.04);
+      osc.frequency.exponentialRampToValueAtTime(freq, now + idx * 0.04 + 0.08);
+
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(freq * 2.2, now);
+      filter.Q.setValueAtTime(3.0, now);
+
+      gain.gain.setValueAtTime(0.0001, now + idx * 0.04);
+      gain.gain.linearRampToValueAtTime(0.28, now + idx * 0.04 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.04 + 3.2);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now + idx * 0.04);
+      osc.stop(now + idx * 0.04 + 3.3);
+    });
+  }
+
+  // Play Deity Specific Sacred Acoustic Sound
+  playDeitySound(deity) {
+    switch (deity) {
+      case 'durga':
+        this.playShankha();
+        this.playGhanta(880, 2.6);
+        break;
+      case 'lakshmi':
+        this.playGhanta(1760, 2.5);
+        setTimeout(() => this.playGhanta(2200, 2.0), 180);
+        break;
+      case 'saraswati':
+        this.playVeenaChord();
+        break;
+      case 'ganesha':
+        this.playGhanta(1100, 2.4);
+        setTimeout(() => this.playGhanta(1320, 2.0), 200);
+        break;
+      case 'kartikeya':
+        this.playDhakBol('dhak-dha');
+        setTimeout(() => this.playDhakBol('dhak-ti'), 130);
+        setTimeout(() => this.playGhanta(1500, 1.4), 260);
+        break;
+      default:
+        this.playGhanta(1480, 2.0);
+        break;
+    }
+  }
 }
 
 const synth = new FestivalAudioSynthesizer();
@@ -1570,6 +1630,159 @@ function initDurgaVectorAnimation() {
 }
 
 // ==========================================================================
+// 12. Grand Ekchala Pantheon Vector Art Controller
+// ==========================================================================
+
+const DEITY_DATA = {
+  all: {
+    badge: 'ঐতিহ্যবাহী শারদোৎসব',
+    title: 'সম্পূর্ণ একচালা দুর্গোৎসব পরিষদ (The Grand Ekchala Pantheon)',
+    shloka: '“ওঁ জয়ন্তী মঙ্গলা কালী ভদ্রকালী কপালিনী। দুর্গা শিবা ক্ষমা ধাত্রী স্বাহা স্বধা নমোঽস্তু তে॥”',
+    meaning: 'In traditional Bengali heritage, Maa Durga arrives on earth accompanied by Her divine children: Lakshmi (wealth & prosperity), Saraswati (knowledge & arts), Ganesha (wisdom & auspicious beginnings), and Kartikeya (courage & protection), united under the sacred arched Chalchitra frame.',
+    tags: ['🏛️ Tradition: Ekchala (একচালা)', '🖼️ Frame: Celestial Chalchitra', '👨‍👩‍👧‍👦 Family: The Divine Homecoming']
+  },
+  durga: {
+    badge: 'দশপ্রহরণধারিণী',
+    title: 'মা দুর্গা ও মহিষাসুরমর্দিনী (Maa Durga)',
+    shloka: '“সর্বমঙ্গলমঙ্গল্যে শিবে সর্বার্থসাধিকে। শরণ্যে ত্র্যম্বকে গৌরি নারায়ণি নমোঽস্তু তে॥”',
+    meaning: 'Maa Durga stands in the center as the supreme embodiment of divine feminine energy (Shakti). Her ten arms hold the ten weapons gifted by the gods to vanquish darkness and ignorance (Mahishasura), riding Her fearless golden Lion.',
+    tags: ['🦁 Vahan: Singho (Lion)', '🔱 Weapon: Golden Trishul', '✨ Symbolism: Supreme Cosmic Energy']
+  },
+  lakshmi: {
+    badge: 'ধনধান্যদা',
+    title: 'দেবী লক্ষ্মী (Devi Lakshmi)',
+    shloka: '“ওঁ শ্রীং হ্রীং ক্লীং ত্রিভুবন মহালক্ষ্ম্যৈ অস্মাকং দারিদ্র্য নাশায় মঙ্গলাং দেহি নমো নমঃ॥”',
+    meaning: 'Devi Lakshmi is the goddess of wealth, fortune, light, and auspicious harvests. In the Ekchala frame, She stands gracefully to Durga’s right, clutching a blooming pink lotus and sheaf of golden paddy (dhaner chhari), seated beside Her mount, the wise white barn owl.',
+    tags: ['🦉 Vahan: Pecha (White Owl)', '🪷 Attributes: Pink Lotus & Golden Grain', '🌾 Symbolism: Abundance & Purity']
+  },
+  saraswati: {
+    badge: 'বিদ্যাদায়িনী',
+    title: 'দেবী সরস্বতী (Devi Saraswati)',
+    shloka: '“যা কুন্দেন্দুতুষারহারধবলা যা শুভ্রবস্ত্রাবৃতা। যা বীণাবরদণ্ডমণ্ডীতকরা যা শ্বেতপদ্মাসীনা॥”',
+    meaning: 'Devi Saraswati is the radiant goddess of knowledge, arts, literature, and inner wisdom. Dressed in spotless white representing ultimate truth, She plays the sacred Veena and is accompanied by the discriminating royal white swan (Rajhamsa).',
+    tags: ['🦢 Vahan: Rajhamsa (Divine Swan)', '🪕 Instrument: Classical Veena', '📖 Symbolism: Truth, Knowledge & Arts']
+  },
+  ganesha: {
+    badge: 'সিদ্ধিদাতা',
+    title: 'শ্রী সিদ্ধিদাতা গণেশ (Lord Ganesha)',
+    shloka: '“বক্রতুণ্ড মহাকায় সূর্যকোটি সমপ্রভ। নির্বিঘ্নং কুরু মে দেব সর্বকার্যেষু সর্বদা॥”',
+    meaning: 'Lord Ganesha is the remover of all obstacles and harbinger of auspicious beginnings and intellect. In the Ekchala composition, He resides on the far left with His curved trunk holding a sweet modak, blessing devotees alongside His nimble carrier, Moushiko the mouse.',
+    tags: ['🐀 Vahan: Moushiko (Mouse)', '🍯 Attribute: Modak & Broken Tusk', '🕉️ Symbolism: Intellect & Remover of Obstacles']
+  },
+  kartikeya: {
+    badge: 'দেবসেনাপতি',
+    title: 'শ্রী কার্তিক (Lord Kartikeya)',
+    shloka: '“কার্তিকেয়ং মহাবাহুং ময়ূরবাহনস্থিতম্। শক্তিহস্তং মহাবীরং দেবসেনাপতিং ভজে॥”',
+    meaning: 'Lord Kartikeya is the handsome divine commander of the celestial forces, personifying youth, supreme valour, and righteous strength. Standing on the far right, He wields a golden bow and spear while standing beside His resplendent dancing peacock.',
+    tags: ['🦚 Vahan: Mayur (Peacock)', '🏹 Weapons: Golden Spear (Vel) & Bow', '⚔️ Symbolism: Valour & Righteous Protection']
+  }
+};
+
+function initEkchalaController() {
+  const pills = document.querySelectorAll('.deity-pill');
+  const hotspots = document.querySelectorAll('.deity-hotspot');
+  const stage = document.getElementById('ekchalaStage');
+  const svg = document.getElementById('ekchalaSvg');
+  const btnReplay = document.getElementById('btnReplayEkchala');
+  const btnAarti = document.getElementById('btnAartiSpotlight');
+
+  const badgeEl = document.getElementById('infoDeityBadge');
+  const titleEl = document.getElementById('infoDeityTitle');
+  const shlokaEl = document.getElementById('infoDeityShloka');
+  const meaningEl = document.getElementById('infoDeityMeaning');
+  const tagsEl = document.getElementById('infoDeityTags');
+
+  if (!stage || !svg) return;
+
+  function selectDeity(deityId, playSound = true) {
+    const data = DEITY_DATA[deityId] || DEITY_DATA.all;
+
+    // Update active pill
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('data-deity') === deityId);
+    });
+
+    // Update SVG hotspots spotlight / dimmed states
+    hotspots.forEach(hs => {
+      const hDeity = hs.getAttribute('data-deity');
+      if (deityId === 'all') {
+        hs.classList.remove('spotlight', 'dimmed');
+      } else if (hDeity === deityId) {
+        hs.classList.add('spotlight');
+        hs.classList.remove('dimmed');
+      } else {
+        hs.classList.add('dimmed');
+        hs.classList.remove('spotlight');
+      }
+    });
+
+    // Smoothly update Info Card
+    const infoCard = document.getElementById('deityInfoCard');
+    if (infoCard) {
+      infoCard.style.opacity = '0.3';
+      infoCard.style.transform = 'translateY(4px)';
+      setTimeout(() => {
+        if (badgeEl) badgeEl.textContent = data.badge;
+        if (titleEl) titleEl.textContent = data.title;
+        if (shlokaEl) shlokaEl.textContent = data.shloka;
+        if (meaningEl) meaningEl.textContent = data.meaning;
+        if (tagsEl) {
+          tagsEl.innerHTML = data.tags.map(t => `<span class="symbol-tag">${t}</span>`).join('');
+        }
+        infoCard.style.opacity = '1';
+        infoCard.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    if (playSound) {
+      synth.playDeitySound(deityId);
+    }
+  }
+
+  // Pill click handlers
+  pills.forEach(p => {
+    p.addEventListener('click', () => {
+      const deity = p.getAttribute('data-deity');
+      selectDeity(deity, true);
+    });
+  });
+
+  // SVG Hotspot click handlers
+  hotspots.forEach(hs => {
+    hs.addEventListener('click', e => {
+      e.stopPropagation();
+      const deity = hs.getAttribute('data-deity');
+      selectDeity(deity, true);
+    });
+  });
+
+  // Replay Line Draw Animation
+  btnReplay?.addEventListener('click', () => {
+    const ekPaths = svg.querySelectorAll('.ek-path');
+    ekPaths.forEach(p => {
+      p.style.animation = 'none';
+      p.offsetHeight; // trigger reflow
+      p.style.animation = '';
+    });
+    synth.playGhanta(1620, 2.0);
+  });
+
+  // Toggle Aarti Spotlight Atmosphere
+  btnAarti?.addEventListener('click', () => {
+    stage.classList.toggle('aarti-spotlight');
+    const isActive = stage.classList.contains('aarti-spotlight');
+    btnAarti.classList.toggle('active', isActive);
+
+    if (isActive) {
+      synth.playShankha();
+      synth.playGhanta(1760, 2.5);
+    } else {
+      synth.playGhanta(1200, 1.2);
+    }
+  });
+}
+
+// ==========================================================================
 // Initialize on DOM Ready
 // ==========================================================================
 
@@ -1577,6 +1790,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticleCanvas();
   initCountdown();
   initDurgaVectorAnimation();
+  initEkchalaController();
   initDarshanInteractions();
   initScheduleTabs();
   initPandalsGrid();
@@ -1585,3 +1799,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initCommunity();
   initNavigation();
 });
+
